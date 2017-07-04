@@ -45,4 +45,36 @@ public abstract class Person extends GenericDomain<String> {
     public void setInternalCode(String internalCode) {
         this.internalCode = internalCode;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Person person = (Person) o;
+
+        if (name != null ? !name.equals(person.name) : person.name != null) return false;
+        if (hierarchyCode != null ? !hierarchyCode.equals(person.hierarchyCode) : person.hierarchyCode != null)
+            return false;
+        return internalCode != null ? internalCode.equals(person.internalCode) : person.internalCode == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (hierarchyCode != null ? hierarchyCode.hashCode() : 0);
+        result = 31 * result + (internalCode != null ? internalCode.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", hierarchyCode='" + hierarchyCode + '\'' +
+                ", internalCode='" + internalCode + '\'' +
+                '}';
+    }
 }

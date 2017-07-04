@@ -17,14 +17,14 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
- * @author wmfsystem
  * @param <F> WService
  * @param <E> WDomain
  * @param <D> Type Id
+ * @author wmfsystem
  */
 @RestController
 public abstract class GenericResource<F extends GenericService, E extends GenericDomain, D extends Serializable> {
@@ -47,7 +47,8 @@ public abstract class GenericResource<F extends GenericService, E extends Generi
     public ResponseEntity<E> find(@PathVariable D id) {
         E response = (E) service.findOne(id);
         CacheControl cacheControl = CacheControl.maxAge(20, TimeUnit.SECONDS);
-        return ResponseEntity.status(HttpStatus.OK).cacheControl(cacheControl).body(response);
+        return ResponseEntity.status(response == null ? HttpStatus.NO_CONTENT : HttpStatus.OK)
+                .cacheControl(cacheControl).body(response);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -61,7 +62,7 @@ public abstract class GenericResource<F extends GenericService, E extends Generi
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<E> update(@RequestBody E object, @PathVariable("id") Serializable id, QueryObject queryObject) {
+    public ResponseEntity<E> update(@RequestBody E object, @PathVariable("id") Serializable id) {
         object.setId(id);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(object.getId()).toUri();

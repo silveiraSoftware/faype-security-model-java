@@ -4,6 +4,7 @@ import com.faype.security.core.domain.GenericDomain;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Created by wmfsystem on 7/3/17.
@@ -52,5 +53,9 @@ public class Token extends GenericDomain<String> {
 
     public void setUser(User user) {
         this.user = user;
+        UUID uuid = UUID.fromString(user.toString());
+        String token = uuid.toString();
+
+
     }
 }

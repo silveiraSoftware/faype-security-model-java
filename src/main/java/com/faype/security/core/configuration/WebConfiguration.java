@@ -1,6 +1,8 @@
 package com.faype.security.core.configuration;
 
+import com.faype.security.core.interceptor.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -22,7 +24,13 @@ public class WebConfiguration extends WebMvcConfigurerAdapter{
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(requestInterceptor());
         super.addInterceptors(registry);
+    }
+
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        return new RequestInterceptor();
     }
 
 

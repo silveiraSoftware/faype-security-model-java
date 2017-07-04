@@ -37,4 +37,30 @@ public abstract class GenericDomain<ID extends Serializable> implements Serializ
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GenericDomain<?> that = (GenericDomain<?>) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return createdAt != null ? createdAt.equals(that.createdAt) : that.createdAt == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "GenericDomain{" +
+                "id=" + id +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

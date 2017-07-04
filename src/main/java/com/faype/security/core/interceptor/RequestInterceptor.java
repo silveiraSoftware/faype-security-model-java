@@ -30,7 +30,7 @@ public class RequestInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        String requestToken = hsr.getHeader("faypeToken") != null ? hsr.getHeader("faypeToken") : hsr.getParameter("faypeToken");
+        String requestToken = hsr.getHeader("faype-token") != null ? hsr.getHeader("faype-token") : hsr.getParameter("faype-token");
 
         if (requestToken != null) {
             Token token = tokenService.findOne(requestToken);
