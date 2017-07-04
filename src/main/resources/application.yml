@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: faype-security
+  profiles:
+    active: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: faype-security
